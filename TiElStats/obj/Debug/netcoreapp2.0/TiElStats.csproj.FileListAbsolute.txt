@@ -1,0 +1,11 @@
+D:\Projects\TiElStats\TiElStats\bin\Debug\netcoreapp2.0\TiElStats.deps.json
+D:\Projects\TiElStats\TiElStats\bin\Debug\netcoreapp2.0\TiElStats.runtimeconfig.json
+D:\Projects\TiElStats\TiElStats\bin\Debug\netcoreapp2.0\TiElStats.runtimeconfig.dev.json
+D:\Projects\TiElStats\TiElStats\bin\Debug\netcoreapp2.0\TiElStats.dll
+D:\Projects\TiElStats\TiElStats\obj\Debug\netcoreapp2.0\TiElStats.csprojResolveAssemblyReference.cache
+D:\Projects\TiElStats\TiElStats\obj\Debug\netcoreapp2.0\TiElStats.csproj.CoreCompileInputs.cache
+D:\Projects\TiElStats\TiElStats\obj\Debug\netcoreapp2.0\TiElStats.AssemblyInfoInputs.cache
+D:\Projects\TiElStats\TiElStats\obj\Debug\netcoreapp2.0\TiElStats.AssemblyInfo.cs
+D:\Projects\TiElStats\TiElStats\bin\Debug\netcoreapp2.0\TiElStats.pdb
+D:\Projects\TiElStats\TiElStats\obj\Debug\netcoreapp2.0\TiElStats.dll
+D:\Projects\TiElStats\TiElStats\obj\Debug\netcoreapp2.0\TiElStats.pdb
