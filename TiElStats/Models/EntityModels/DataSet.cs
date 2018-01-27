@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 
-namespace TiElStats.Models
+namespace TiElStats.Models.EntityModels
 {
     public class DataSet
     {
@@ -17,12 +15,12 @@ namespace TiElStats.Models
         [BsonElement("unit")]
         public string Unit { get; set; }
         [BsonElement("data")]
-        public List<Data> Data { get; set; }
-        [BsonElement("is_deleted")]
+        public List<StatisticalData> Data { get; set; }
+        [BsonElement("isDeleted")]
         public bool IsDeleted { get; set; }
-        [BsonElement("date_created")]
+        [BsonElement("dateCreated")]
         public DateTime DateCreated { get; set;  }
-        [BsonElement("date_last_modified")]
+        [BsonElement("dateLastModified")]
         public DateTime DateLastModified { get; set; }   
     }
 }

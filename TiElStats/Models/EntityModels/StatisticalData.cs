@@ -1,9 +1,9 @@
 ﻿using System;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace TiElStats.Models
+namespace TiElStats.Models.EntityModels
 {
-    public class Data
+    public class StatisticalData
     {
         [BsonElement("timestamp")]
         public DateTime Timestamp { get; set; }

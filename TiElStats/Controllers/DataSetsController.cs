@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Newtonsoft.Json.Linq;
-using System.Web;
-using Microsoft.EntityFrameworkCore;
-using TiElStats.Models;
-using TiElStats.ViewModels;
+using TiElStats.Models.EntityModels;
+using TiElStats.Models.ViewModels;
 
 namespace TiElStats.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/datasets")]
     public class DataSetsController : Controller
     {
 
@@ -38,7 +32,7 @@ namespace TiElStats.Controllers
         {
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("TiElStats");
-            var collection = database.GetCollection<DataSet>("data_sets");
+            var collection = database.GetCollection<DataSet>("dataSets");
             var dataSetToInsert = new DataSet()
             {
                 Name = dataSet.Name,
@@ -59,7 +53,7 @@ namespace TiElStats.Controllers
         {
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("TiElStats");
-            var collection = database.GetCollection<DataSet>("data_sets");
+            var collection = database.GetCollection<DataSet>("dataSets");
             var filter = Builders<DataSet>.Filter
                 .Eq("_id", ObjectId.Parse(id));
             var update = Builders<DataSet>.Update
@@ -78,7 +72,7 @@ namespace TiElStats.Controllers
         {
             var client = new MongoClient("mongodb://localhost:27017");
             var database = client.GetDatabase("TiElStats");
-            var collection = database.GetCollection<DataSet>("data_sets");
+            var collection = database.GetCollection<DataSet>("dataSets");
             var filter = Builders<DataSet>.Filter
                 .Eq("_id", ObjectId.Parse(id));
             var update = Builders<DataSet>.Update

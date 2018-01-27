@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
-using TiElStats.Models;
+﻿using System.Collections.Generic;
+using TiElStats.Models.EntityModels;
 
-namespace TiElStats.ViewModels
+namespace TiElStats.Models.ViewModels
 {
     public class EditDataSetViewModel
     {
@@ -20,6 +14,6 @@ namespace TiElStats.ViewModels
         // [BsonElement("unit")]
         public string Unit { get; set; }
         // [BsonElement("data")]
-        public List<Data> Data { get; set; }
+        public List<StatisticalData> Data { get; set; }
     }
 }
