@@ -1,4 +1,4 @@
-﻿namespace TiElStats.Models.ViewModels
+﻿namespace TiElStats.Models.ViewModels.User
 {
     public class LoginViewModel
     {

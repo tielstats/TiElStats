@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,10 +13,12 @@ using MongoDB.Driver;
 using TiElStats.Database;
 using TiElStats.Models.EntityModels;
 using TiElStats.Models.ViewModels;
+using TiElStats.Models.ViewModels.User;
 using TiElStats.Services.Security;
 
 namespace TiElStats.Controllers
 {
+    [Authorize]
     [Route("api/users")]
     public class UsersController : Controller
     {
@@ -24,8 +27,8 @@ namespace TiElStats.Controllers
         [HttpPost]
         public void Register([FromBody] RegisterViewModel registerViewModel)
         { 
-            var users = DatabaseContext.Users();
-            var user = users.Find(u=>u.Email == registerViewModel.Email).FirstOrDefault();
+            var usersColletion = DatabaseContext.Users();
+            var user = usersColletion.Find(u=>u.Email == registerViewModel.Email).FirstOrDefault();
 
             if (registerViewModel.Password == registerViewModel.PasswordRepeated && user == null)
             {
@@ -52,7 +55,7 @@ namespace TiElStats.Controllers
                     DateCreated = DateTime.Now,
                     DateLastModified = DateTime.Now,
                 };
-                users.InsertOne(userToInsert);
+                usersColletion.InsertOne(userToInsert);
             }
         }
 
@@ -62,11 +65,12 @@ namespace TiElStats.Controllers
         public string Login([FromBody] RegisterViewModel loginViewModel)
         {
             var users = DatabaseContext.Users();
-            var user = users.Find(new BsonDocument { { "email", loginViewModel.Email } })
-                .FirstAsync()
-                .Result;
+            var userPasswordHash = users
+                .Find(new BsonDocument { { "email", loginViewModel.Email } })
+                .FirstOrDefault()
+                .Password;
 
-            var userValidator = new UserValidator(loginViewModel.Email, loginViewModel.Password);
+            var userValidator = new UserValidator(loginViewModel.Password, userPasswordHash);
 
             if (userValidator.ValidateUser())
             {
@@ -74,9 +78,10 @@ namespace TiElStats.Controllers
                 string token = tokenGenerator.Generate();
                 return token;
             }
+
             else
             {
-                return "token";
+                return HttpStatusCode.BadRequest.ToString();
             }
         }
     }

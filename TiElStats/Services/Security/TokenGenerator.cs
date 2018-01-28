@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using TiElStats.Utilities;
 
 namespace TiElStats.Services.Security
 {
@@ -17,7 +18,7 @@ namespace TiElStats.Services.Security
 
         public string Generate()
         {
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("a very long secret used in this marvellous app"));
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SystemConstants.TokenSecret));
             
             var claims = new Claim[]
             {
@@ -25,15 +26,15 @@ namespace TiElStats.Services.Security
             };
             
             var token = new JwtSecurityToken(
-                issuer: "your app",
-                audience: "the client of your app",
+                issuer: "TiEl Stats",
+                audience: "TiEl Stats Web app",
                 claims: claims,
                 notBefore: DateTime.Now,
                 expires: DateTime.Now.AddDays(28),
                 signingCredentials: new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
             );
 
-            string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
+            var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwtToken;
         }

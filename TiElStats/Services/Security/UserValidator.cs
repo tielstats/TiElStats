@@ -6,35 +6,20 @@ namespace TiElStats.Services.Security
 {
     public class UserValidator
     {
-        private readonly string _email;
-        private readonly string _password;
+        private readonly string _loginPassword;
+        private readonly string _userPasswordHash;
 
-        public UserValidator(string email, string password)
+        public UserValidator(string loginPassword, string userPasswordHash)
         {
-            this._email = email;
-            this._password = password;
+            this._loginPassword = loginPassword;
+            this._userPasswordHash = userPasswordHash;
         }
 
         public bool ValidateUser()
         {
-            StringBuilder Sb = new StringBuilder();
+            var loginPasswordHash = new PasswordEncrypter(_loginPassword).Encrypt();
 
-            using (var hash = SHA256.Create())
-            {
-                Encoding enc = Encoding.UTF8;
-                Byte[] result = hash.ComputeHash(enc.GetBytes(_password));
-                foreach (Byte b in result)
-                {
-                    Sb.Append(b.ToString("x2"));
-
-                }
-            }
-            return _email == "Tisho" && _password == "123456";
-        }
-
-        public bool ValidatePassword()
-        {
-            return true;
+            return loginPasswordHash == _userPasswordHash;
         }
     }
 }

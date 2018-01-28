@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MongoDB.Bson.Serialization.Attributes;
-
-namespace TiElStats.Models.ViewModels
+﻿namespace TiElStats.Models.ViewModels.User
 {
     public class RegisterViewModel
     {
