@@ -26,11 +26,11 @@ namespace TiElStats.Services.Security
             };
             
             var token = new JwtSecurityToken(
-                issuer: "TiEl Stats",
-                audience: "TiEl Stats Web app",
+                issuer: SystemConstants.TokenIssuer,
+                audience: SystemConstants.TokenAudience,
                 claims: claims,
                 notBefore: DateTime.Now,
-                expires: DateTime.Now.AddDays(28),
+                expires: DateTime.Now.AddDays(90),
                 signingCredentials: new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256)
             );
 

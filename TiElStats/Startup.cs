@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using TiElStats.Utilities;
 
 namespace TiElStats
 {
@@ -26,22 +22,23 @@ namespace TiElStats
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddAuthentication(options => {
-                    options.DefaultAuthenticateScheme = "JwtBearer";
-                    options.DefaultChallengeScheme = "JwtBearer";            
-                })
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "JwtBearer";
+                options.DefaultChallengeScheme = "JwtBearer";
+            })
                 .AddJwtBearer("JwtBearer", jwtBearerOptions =>
-                {                        
+                {
                     jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
-                    {                            
+                    {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your secret goes here")),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SystemConstants.TokenSecret)),
 
                         ValidateIssuer = true,
-                        ValidIssuer = "The name of the issuer",
+                        ValidIssuer = SystemConstants.TokenIssuer,
 
                         ValidateAudience = true,
-                        ValidAudience = "The name of the audience",
+                        ValidAudience = SystemConstants.TokenAudience,
 
                         ValidateLifetime = true, //validate the expiration and not before values in the token
 

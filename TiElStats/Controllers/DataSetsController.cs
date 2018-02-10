@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -22,9 +23,21 @@ namespace TiElStats.Controllers
 
         // GET api/datasets
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new string[] { "foo", "bar" };
+            var dataSetsCollection = DatabaseContext.DataSets();
+            var filter = Builders<DataSet>.Filter.Empty;
+
+            var result = new StringBuilder();
+
+            foreach (var dataSet in dataSetsCollection.Find(filter).ToListAsync().Result)
+            {
+                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(dataSet, Formatting.Indented);
+                result.Append(jsonString);
+                result.Append("\n");
+            }
+            
+            return result.ToString();
         }
     
 
@@ -37,7 +50,7 @@ namespace TiElStats.Controllers
             var filter = Builders<DataSet>.Filter.Eq("_id", ObjectId.Parse(id));
             var dataset = dataSetsCollection.Find(filter).FirstOrDefault();
 
-            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(dataset);
+            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(dataset, Formatting.Indented);
 
             return jsonString;
         }
@@ -45,6 +58,7 @@ namespace TiElStats.Controllers
         // POST api/datasets/create
         [Route("create")]
         [HttpPost]
+        [Authorize]
         public void Post([FromBody] CreateDataSetViewModel createDataSetViewModel)
         {
             var dataSetsCollection = DatabaseContext.DataSets();
@@ -63,10 +77,11 @@ namespace TiElStats.Controllers
             dataSetsCollection.InsertOne(dataSetToInsert);
         }
 
-        // POST api/datasets/edit/"id"
+        // PUT api/datasets/edit/"id"
         [Route("edit/{id}")]
-        [HttpPost]
-        public void Put(string id, [FromBody] EditDataSetViewModel editDataSetViewModel)
+        [HttpPut]
+        [Authorize]
+        public void Edit(string id, [FromBody] EditDataSetViewModel editDataSetViewModel)
         {
             var dataSetsCollection = DatabaseContext.DataSets();
             var filter = Builders<DataSet>.Filter
@@ -82,7 +97,9 @@ namespace TiElStats.Controllers
         }
 
         // DELETE api/datasets/delete/"id"
-        [HttpPost("delete/{id}")]
+        [Route("delete/{id}")]
+        [HttpDelete]
+        [Authorize]
         public void Delete(string id)
         {
             var dataSetsCollection = DatabaseContext.DataSets();

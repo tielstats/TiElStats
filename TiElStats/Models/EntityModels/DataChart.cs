@@ -12,6 +12,8 @@ namespace TiElStats.Models.EntityModels
         public string Description { get; set; }
         [BsonElement("dataSets")]
         public List<DataSet> DataSets { get; set; }
+        [BsonElement("events")]
+        public List<Event> Events { get; set; }
         [BsonElement("isDeleted")]
         public bool IsDeleted { get; set; }
         [BsonElement("dateCreated")]
