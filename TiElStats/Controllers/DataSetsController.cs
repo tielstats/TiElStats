@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Runtime.Serialization.Json;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +17,7 @@ namespace TiElStats.Controllers
     {
 
         // GET api/datasets
+
         [HttpGet]
         public string Get()
         {
@@ -42,20 +38,22 @@ namespace TiElStats.Controllers
     
 
         // GET api/datasets/"id"
+
         [Route("{id}")]
         [HttpGet]
         public string Get(string id)
         {
             var dataSetsCollection = DatabaseContext.DataSets();            
             var filter = Builders<DataSet>.Filter.Eq("_id", ObjectId.Parse(id));
-            var dataset = dataSetsCollection.Find(filter).FirstOrDefault();
+            var dataSet = dataSetsCollection.Find(filter).FirstOrDefault();
 
-            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(dataset, Formatting.Indented);
+            var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(dataSet, Formatting.Indented);
 
             return jsonString;
         }
 
         // POST api/datasets/create
+
         [Route("create")]
         [HttpPost]
         [Authorize]
@@ -78,6 +76,7 @@ namespace TiElStats.Controllers
         }
 
         // PUT api/datasets/edit/"id"
+
         [Route("edit/{id}")]
         [HttpPut]
         [Authorize]
@@ -97,6 +96,7 @@ namespace TiElStats.Controllers
         }
 
         // DELETE api/datasets/delete/"id"
+
         [Route("delete/{id}")]
         [HttpDelete]
         [Authorize]

@@ -19,5 +19,15 @@ namespace TiElStats.Database
         {
             return Database.GetCollection<DataSet>("dataSets");
         }
+
+        public static IMongoCollection<DataChart> DataCharts()
+        {
+            return Database.GetCollection<DataChart>("dataCharts");
+        }
+
+        public static IMongoCollection<Event> Events()
+        {
+            return Database.GetCollection<Event>("events");
+        }
     }
 }
